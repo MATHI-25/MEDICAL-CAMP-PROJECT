@@ -1,0 +1,66 @@
+server:
+  port: 8081
+
+spring:
+  application:
+    name: mediq-backend
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:mediq_db;DB_CLOSE_DELAY=-1;MODE=MySQL}
+    username: ${SPRING_DATASOURCE_USERNAME:sa}
+    password: ${SPRING_DATASOURCE_PASSWORD:}
+    driver-class-name: ${SPRING_DATASOURCE_DRIVER:org.h2.Driver}
+  sql:
+    init:
+      mode: never
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false
+  
+
+app:
+  jwt:
+    secret: 9a6e8b1c4d7e2f5a8b0c3d6e9f1a4b7c0d3e6f9a2b5c8d1e4f7a0b3c6d9e2f5a
+    expiration-ms: 86400000 # 24 Hours
+    refresh-expiration-ms: 604800000 # 7 Days
+  sms:
+    enabled: ${SMS_ENABLED:true}
+    provider: ${SMS_PROVIDER:MOCK} # Options: TWILIO, FAST2SMS, MOCK
+    twilio:
+      account-sid: ${TWILIO_ACCOUNT_SID:AC_demo_twilio_account_sid}
+      auth-token: ${TWILIO_AUTH_TOKEN:demo_twilio_auth_token}
+      from-number: ${TWILIO_FROM_NUMBER:+1234567890}
+    fast2sms:
+      api-key: ${FAST2SMS_API_KEY:demo_fast2sms_api_key}
+  whatsapp:
+    enabled: ${WHATSAPP_ENABLED:true}
+    provider: ${WHATSAPP_PROVIDER:AUTO} # Options: AUTO, DIRECT_WEB, TWILIO, META
+    twilio:
+      account-sid: ${TWILIO_ACCOUNT_SID:}
+      auth-token: ${TWILIO_AUTH_TOKEN:}
+      from-number: ${TWILIO_WHATSAPP_FROM:whatsapp:+14155238886}
+    meta:
+      phone-number-id: ${META_WHATSAPP_PHONE_ID:}
+      access-token: ${META_WHATSAPP_ACCESS_TOKEN:}
+
+springdoc:
+  api-docs:
+    path: /v3/api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operationsSorter: method
+
+logging:
+  level:
+    root: INFO
+    com.mediq: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.security: INFO
