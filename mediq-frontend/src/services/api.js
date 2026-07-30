@@ -1,11 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API_BASE_URL = '/api/v1';
+const API_BASE_URL =
+  "https://medical-camp-project-production.up.railway.app/api/v1";
 
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    'Content-Type': 'application/json',
+    "Content-Type": "application/json",
   },
 });
 
